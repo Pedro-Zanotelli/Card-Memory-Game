@@ -1,3 +1,5 @@
+let flippedCards = [];
+
 function getValidNumberOfCards() {
     const maxAttempts = 10;
     let attempts = 0;
@@ -12,6 +14,8 @@ function getValidNumberOfCards() {
             alert(`Invalid input. Please enter an even number between 4 and 14. Attempts left: ${maxAttempts - attempts}`);
         }
     }
+
+    return 10;
 }
 
 function shuffleArray() { 
@@ -57,10 +61,34 @@ function displayCards(numberOfCards) {
 }
 
 function cardFlip(card){
+
+    if (card.classList.contains('flipped')) return;
+
     card.classList.add('flipped');
-    setTimeout(function() {
-        card.classList.remove('flipped');  
-    }, 1000);
+    flippedCards.push(card)
+
+    if (flippedCards.length === 2) {
+        checkingSelectedCards()
+    }
+
+}
+
+function checkingSelectedCards() {
+    const [firstCard, secondCard] = flippedCards;
+
+    const firstImage = firstCard.querySelector('.back-face img').src;
+    const secondImage = secondCard.querySelector('.back-face img').src;
+
+    if (firstImage === secondImage) {
+        flippedCards = [];
+    }
+    else {
+        setTimeout(() => {
+           firstCard.classList.remove('flipped');
+           secondCard.classList.remove('flipped');
+           flippedCards = [] 
+        }, 1000);
+    }
 }
 
 const numberOfCards = getValidNumberOfCards(); 
