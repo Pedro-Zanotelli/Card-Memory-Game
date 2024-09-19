@@ -1,46 +1,67 @@
-let numberOfCards
-()
-
 function getValidNumberOfCards() {
-    
-    while (true) {
-        numberOfCards = Number(prompt("Enter a number of cards between 4 and 14 (inclusive), and it must be even."));
+    const maxAttempts = 10;
+    let attempts = 0;
+
+    while (attempts < maxAttempts) {
+        const numberOfCards = Number(prompt("Enter an even number of cards between 4 and 14."));
 
         if (numberOfCards >= 4 && numberOfCards <= 14 && numberOfCards % 2 === 0) {
-            return numberOfCards; 
+            return numberOfCards;
         } else {
-            console.log("Invalid input. Please enter an even number between 4 and 14.");
+            attempts++;
+            alert(`Invalid input. Please enter an even number between 4 and 14. Attempts left: ${maxAttempts - attempts}`);
         }
     }
 }
 
-let counter = 0
-const addedCardsArray = [
-    "Adicione uma tarefa no botão acima",
-    "Passe o mouse na tarefa para ver o botão excluir",
-    "Clique na tarefa para marca-la como feita"
-];
+function shuffleArray() { 
+    return Math.random() - 0.5; 
+}
 
-function addCards() {
-    const addedCard = document.querySelector(".card");
+function displayCards(numberOfCards) {
+    const allCardsContainer = document.querySelector(".all-cards");
+    allCardsContainer.innerHTML = '';
+
+    const cardImages = [
+        'assets/bobrossparrot.gif',
+        'assets/explodyparrot.gif',
+        'assets/fiestaparrot.gif',
+        'assets/metalparrot.gif',
+        'assets/revertitparrot.gif',
+        'assets/tripletsparrot.gif',
+        'assets/unicornparrot.gif'
+    ]
+
+    const cardsArray = [];
+    for (let i = 0; i < numberOfCards / 2; i++) {
+        cardsArray.push(cardImages[i], cardImages[i]);
+    }
+
+    cardsArray.sort(shuffleArray);
 
     for(let i = 0; i < numberOfCards; i++ ) {
-        const cardHtml = `
-            <div class="front-face face">
-                 <img src="assets/back.png">
+        const cardElement = `
+            <div class="card" onclick="cardFlip(this)">
+                <div class="front-face face">
+                    <img src="assets/back.png">
+                </div>
+                <div class="back-face face">
+                    <img src="${cardsArray[i]}">
+                </div>
             </div>
-            <div class="back-face face">        
-                <img src="assets/bobrossparrot.gif">
-            </div>
-        `;
+        `
+        ;
 
-        addedCard.innerHTML += cardHtml;
+        allCardsContainer.innerHTML += cardElement;
     }
 }
 
 function cardFlip(card){
     card.classList.add('flipped');
     setTimeout(function() {
-        card.classList.remove('flipped');  // Desvira a carta após 1 segundo
+        card.classList.remove('flipped');  
     }, 1000);
 }
+
+const numberOfCards = getValidNumberOfCards(); 
+displayCards(numberOfCards); 
