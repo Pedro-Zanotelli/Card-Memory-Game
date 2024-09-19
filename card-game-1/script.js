@@ -1,4 +1,5 @@
 let flippedCards = [];
+let isFlippingAllowed = false
 
 function getValidNumberOfCards() {
     const maxAttempts = 10;
@@ -62,18 +63,36 @@ function displayCards(numberOfCards) {
 
 function cardFlip(card){
 
-    if (card.classList.contains('flipped')) return;
+    if (!isFlippingAllowed || card.classList.contains('flipped')) return;
 
     card.classList.add('flipped');
     flippedCards.push(card)
 
     if (flippedCards.length === 2) {
-        checkingSelectedCards()
+        checkingCards()
     }
 
 }
 
-function checkingSelectedCards() {
+function flippingAllCards() {
+    let allCards = document.querySelectorAll('.card');
+
+    for (let i = 0; i < allCards.length; i++) {
+        allCards[i].classList.add('flipped');
+    }
+
+    isFlippingAllowed = false;
+    
+    setTimeout(() => {
+        for (let i = 0; i < allCards.length; i++) {
+            allCards[i].classList.remove('flipped');
+        }
+        isFlippingAllowed = true;
+    }, 1500);
+}
+
+function checkingCards() {
+
     const [firstCard, secondCard] = flippedCards;
 
     const firstImage = firstCard.querySelector('.back-face img').src;
@@ -83,13 +102,18 @@ function checkingSelectedCards() {
         flippedCards = [];
     }
     else {
+
+        isFlippingAllowed = false;
         setTimeout(() => {
            firstCard.classList.remove('flipped');
            secondCard.classList.remove('flipped');
            flippedCards = [] 
+           isFlippingAllowed = true;
         }, 1000);
     }
 }
 
 const numberOfCards = getValidNumberOfCards(); 
 displayCards(numberOfCards); 
+flippingAllCards()
+
