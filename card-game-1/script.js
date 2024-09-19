@@ -1,5 +1,6 @@
 let flippedCards = [];
 let isFlippingAllowed = false
+let clickCounter = 0
 
 function getValidNumberOfCards() {
     const maxAttempts = 10;
@@ -16,7 +17,7 @@ function getValidNumberOfCards() {
         }
     }
 
-    return 10;
+    return 14;
 }
 
 function shuffleArray() { 
@@ -66,7 +67,8 @@ function cardFlip(card){
     if (!isFlippingAllowed || card.classList.contains('flipped')) return;
 
     card.classList.add('flipped');
-    flippedCards.push(card)
+    flippedCards.push(card);
+    clickCounter++;
 
     if (flippedCards.length === 2) {
         checkingCards()
@@ -109,11 +111,23 @@ function checkingCards() {
            secondCard.classList.remove('flipped');
            flippedCards = [] 
            isFlippingAllowed = true;
+           checkAllCardsFlipped()
         }, 1000);
     }
+
+    checkAllCardsFlipped()
 }
+
+function checkAllCardsFlipped() {
+    const allCards = document.querySelectorAll('.card');
+    const flippedCardsCount = document.querySelectorAll('.flipped').length;
+
+    if (flippedCardsCount === allCards.length) {
+        alert(`You won in ${clickCounter} moves!`);
+    }
+}
+
 
 const numberOfCards = getValidNumberOfCards(); 
 displayCards(numberOfCards); 
 flippingAllCards()
-
