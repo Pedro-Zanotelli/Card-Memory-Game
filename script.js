@@ -13,7 +13,7 @@ function getValidNumberOfCards() {
             return numberOfCards;
         } else {
             attempts++;
-            alert(`Invalid input. Please enter an even number between 4 and 14. Attempts left: ${maxAttempts - attempts}`);
+            alert(`Invalid input. Please enter an even number between 4 and 14.`);
         }
     }
 
@@ -29,13 +29,13 @@ function displayCards(numberOfCards) {
     allCardsContainer.innerHTML = '';
 
     const cardImages = [
-        'assets/bobrossparrot.gif',
-        'assets/explodyparrot.gif',
-        'assets/fiestaparrot.gif',
-        'assets/metalparrot.gif',
-        'assets/revertitparrot.gif',
-        'assets/tripletsparrot.gif',
-        'assets/unicornparrot.gif'
+        'assets/B_Radiance.png',
+        'assets/Quirrel.png',
+        'assets/Grimm.png',
+        'assets/The_Knight.png',
+        'assets/zote.png',
+        'assets/hornet.png',
+        'assets/pure_vessel.png'
     ]
 
     const cardsArray = [];
@@ -62,40 +62,9 @@ function displayCards(numberOfCards) {
     }
 }
 
-function cardFlip(card){
-
-    if (!isFlippingAllowed || card.classList.contains('flipped')) return;
-
-    card.classList.add('flipped');
-    flippedCards.push(card);
-    clickCounter++;
-
-    if (flippedCards.length === 2) {
-        checkingCards()
-    }
-
-}
-
-function flippingAllCards() {
-    let allCards = document.querySelectorAll('.card');
-
-    for (let i = 0; i < allCards.length; i++) {
-        allCards[i].classList.add('flipped');
-    }
-
-    isFlippingAllowed = false;
-    
-    setTimeout(() => {
-        for (let i = 0; i < allCards.length; i++) {
-            allCards[i].classList.remove('flipped');
-        }
-        isFlippingAllowed = true;
-    }, 1500);
-}
-
 function checkingCards() {
 
-    const [firstCard, secondCard] = flippedCards;
+    const [firstCard, secondCard] = flippedCards; /*n esquecer que a variavel flippedcards ja foi definida no começo do codigo*/
 
     const firstImage = firstCard.querySelector('.back-face img').src;
     const secondImage = secondCard.querySelector('.back-face img').src;
@@ -127,6 +96,39 @@ function checkAllCardsFlipped() {
     }
 }
 
+function cardFlip(card){
+
+    if (!isFlippingAllowed || card.classList.contains('flipped')) return;/*houve uma grande confusão no meu cerebro nessa parte, entao eu vou reexplicar pra mim mesmo:
+    essa parte do codigo é utilizada apenas como condição, onde se uma das duas for verdadeiro o codigo impede vc de virar a carta. o que me causou mais confusão foi 
+    !isFlippingAllowed, se isFlippingAllowed for false, isso significa que a condição será true, portanto nao podera virar a carta.*/ 
+
+    card.classList.add('flipped');
+    flippedCards.push(card); /*Ao clicar em uma carta o elemento 'card' é enviado para o array de flippedCards e é armazenado
+    em firstCard ou secondCard*/
+    clickCounter++;
+
+    if (flippedCards.length === 2) {
+        checkingCards()
+    }
+
+}
+
+function flippingAllCards() {
+    let allCards = document.querySelectorAll('.card');
+
+    for (let i = 0; i < allCards.length; i++) {
+        allCards[i].classList.add('flipped');
+    }
+
+    isFlippingAllowed = false;
+    
+    setTimeout(() => {
+        for (let i = 0; i < allCards.length; i++) {
+            allCards[i].classList.remove('flipped');
+        }
+        isFlippingAllowed = true;
+    }, 1500);
+}
 
 const numberOfCards = getValidNumberOfCards(); 
 displayCards(numberOfCards); 
