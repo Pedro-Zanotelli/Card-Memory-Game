@@ -122,8 +122,8 @@ body{
 
 @font-face {
     font-family: 'Trajan';
-    src: url('./assets/font/Trajan.ttf') format('truetype'),
-         url('./assets/font/Trajan.woff') format('woff'),
-         url('./assets/font/Trajan.woff2') format('woff2');
+    src: url('../assets/font/Trajan.ttf') format('truetype'),
+         url('../assets/font/Trajan.woff') format('woff'),
+         url('../assets/font/Trajan.woff2') format('woff2');
 }
 
