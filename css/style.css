@@ -1,6 +1,8 @@
 @font-face {
     font-family: Trajan;
-    src: url(/assets/font/Trajan.ttf) format('truetype');
+    src: url(/Memory-Card-Game/assets/font/Trajan.ttf) format('truetype');
+         url(/Memory-Card-Game/assets/font/Trajan.woff) format('woff');
+         url(/Memory-Card-Game/assets/font/Trajan.woff2) format('woff2');
 }
 
 body{
